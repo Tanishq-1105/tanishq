@@ -1,0 +1,239 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Fraud Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input[type="number"] {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result, .metrics {
+            margin-top: 20px;
+        }
+        .metrics p {
+            font-size: 14px;
+            color: #555;
+        }
+        .metrics pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Credit Card Fraud Detection</h1>
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="transaction_number">Enter Transaction Number:</label>
+                <input type="number" id="transaction_number" name="transaction_number" required placeholder="Enter transaction number from the test set">
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">
+                <h3>{{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+
+        <div class="metrics">
+            <p><strong>Model Accuracy:</strong> {{ accuracy }}</p>
+            <p><strong>Confusion Matrix:</strong></p>
+            <pre>{{ conf_matrix }}</pre>
+        </div>
+    </div>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Card Fraud Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
+        input[type="number"], select {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 12px 20px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result, .metrics {
+            margin-top: 20px;
+        }
+        .metrics p {
+            font-size: 14px;
+            color: #555;
+        }
+        .metrics pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        .download-btn {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Credit Card Fraud Detection</h1>
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="transaction_number">Enter Transaction Number:</label>
+                <input type="number" id="transaction_number" name="transaction_number" required placeholder="Enter transaction number from the test set">
+            </div>
+            <div class="form-group">
+                <label for="classifier_choice">Select Classifier:</label>
+                <select id="classifier_choice" name="classifier_choice" required>
+                    <option value="">--Select Model--</option>
+                    <option value="random_forest">Random Forest</option>
+                    <option value="knn">KNN</option>
+                    <option value="classification_model">Classification Model</option>
+                </select>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="result">
+                <h3>{{ prediction_text }}</h3>
+            </div>
+        {% endif %}
+
+        {% if metrics %}
+            <div class="metrics">
+                <h3>Model Metrics for {{ classifier_choice|capitalize }}</h3>
+                <p><strong>Accuracy:</strong> {{ metrics['accuracy'] }}</p>
+                <p><strong>Confusion Matrix:</strong></p>
+                <pre>{{ metrics['conf_matrix'] }}</pre>
+            </div>
+        {% endif %}
+
+        {% if download_link %}
+            <a href="{{ download_link }}" class="download-btn">Download Normalized CSV</a>
+        {% endif %}
+    </div>
+
+</body>
+</html>
